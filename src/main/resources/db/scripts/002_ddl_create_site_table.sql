@@ -1,6 +1,7 @@
 CREATE TABLE site
 (
     id SERIAL PRIMARY KEY,
-    site_name VARCHAR NOT NULL UNIQUE,
-    registration_date TIMESTAMP NOT NULL
+    site VARCHAR NOT NULL UNIQUE,
+    login VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL UNIQUE
 );

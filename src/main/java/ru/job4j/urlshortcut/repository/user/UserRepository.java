@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.urlshortcut.model.User;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
@@ -18,10 +20,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("""
             update User as user
-            set user.userName = :#{#user.userName},
+            set user.name = :#{#user.name},
             user.email = :#{#user.email},
             user.password = :#{#user.password}
             where user.id =:#{#user.id}
             """)
     int update(@Param("user") User user);
+
+    Boolean existsByName(String name);
+
+    Boolean existsByEmail(String email);
+
+    Optional<User> findUserByName(String username);
 }

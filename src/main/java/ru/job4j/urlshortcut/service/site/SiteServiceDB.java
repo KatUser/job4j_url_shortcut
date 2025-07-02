@@ -22,4 +22,9 @@ public class SiteServiceDB implements SiteService {
     public Optional<Site> findById(Long id) {
         return siteRepository.findById(id);
     }
+
+    @Override
+    public Optional<Site> findBySite(String name) {
+        return Optional.ofNullable(siteRepository.findBySite(name));
+    }
 }

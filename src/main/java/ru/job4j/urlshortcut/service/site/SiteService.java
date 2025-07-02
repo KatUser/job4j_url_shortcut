@@ -11,4 +11,6 @@ public interface SiteService {
     Site save(Site site);
 
     Optional<Site> findById(Long id);
+
+    Optional<Site> findBySite(String site);
 }

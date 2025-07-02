@@ -11,6 +11,9 @@
 
     <include file="scripts/001_ddl_create_app_user_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/002_ddl_create_site_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/003_ddl_create_role_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/004_dml_insert_into_role.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/005_ddl_create_app_user_role_table.sql" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

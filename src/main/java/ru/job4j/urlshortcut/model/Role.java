@@ -4,22 +4,19 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "site")
+@Table(name = "role")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Site {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    Long id;
+    private Long id;
 
-    String site;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
 
-    String login;
-
-    String password;
-
+    private ERole name;
 }
