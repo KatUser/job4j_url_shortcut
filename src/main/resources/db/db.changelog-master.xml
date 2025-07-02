@@ -10,7 +10,10 @@
 		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
 
     <include file="scripts/001_ddl_create_app_user_table.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/002_ddl_create_site_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/002_ddl_create_role_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/003_dml_insert_into_role.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/004_ddl_create_app_user_role_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/005_ddl_create_called_url_table.sql" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

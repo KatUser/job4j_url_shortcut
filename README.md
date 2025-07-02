@@ -1,3 +1,5 @@
+[![job4j_url_shortcut Java CI with Maven](https://github.com/KatUser/job4j_url_shortcut/actions/workflows/maven.yml/badge.svg)](https://github.com/KatUser/job4j_url_shortcut/actions/workflows/maven.yml)
+
 🐱‍💻🐱‍💻🐱‍💻
 **Job4j_URL_Shortcut**
 🎈🎈🎈🎈

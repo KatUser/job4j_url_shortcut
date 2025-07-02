@@ -3,7 +3,7 @@ package ru.job4j.urlshortcut.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
@@ -12,21 +12,21 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User {
     @Id
-    @SequenceGenerator(
-            name = "app_user_sequence",
-            sequenceName = "app_user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "app_user_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    Long id;
-    String userName;
-    String email;
-    String password;
-    LocalDateTime registrationDate;
+    private Long id;
+
+    private String site;
+
+    private String login;
+
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @JoinTable(name = "app_user_role", joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> role;
 }
