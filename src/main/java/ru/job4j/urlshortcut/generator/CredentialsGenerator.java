@@ -4,20 +4,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static ru.job4j.urlshortcut.generator.Constants.*;
+import static ru.job4j.urlshortcut.utils.Constants.*;
 import static ru.job4j.urlshortcut.utils.UtilGenerator.randomChar;
 import static ru.job4j.urlshortcut.utils.UtilGenerator.shuffle;
 
 @Service
-public class CredentialsGenerator implements Generator {
+public class CredentialsGenerator {
 
     public HashMap<String, String> credentials = new HashMap<>();
 
-    private int passwordLength = 10;
-
-    @Override
     public HashMap<String, String> generate() {
-        StringBuilder value = new StringBuilder(passwordLength);
+        StringBuilder value = new StringBuilder();
         value.append(randomChar(NUMBERS))
                 .append(randomChar(SPECIAL))
                 .append(randomChar(LOWERCASE))
@@ -26,7 +23,7 @@ public class CredentialsGenerator implements Generator {
         value.append(SYMBOLS.charAt(SECURE_RANDOM.nextInt(SYMBOLS.length())));
         var shuffledValue = shuffle(value.toString());
 
-        StringBuilder key = new StringBuilder(passwordLength);
+        StringBuilder key = new StringBuilder();
         key.append(randomChar(NUMBERS))
                 .append(randomChar(SPECIAL))
                 .append(randomChar(LOWERCASE))

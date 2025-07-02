@@ -1,21 +1,24 @@
 package ru.job4j.urlshortcut.converter;
 
-import org.springframework.stereotype.Component;
-import ru.job4j.urlshortcut.dto.convert.request.ConvertRequestDTO;
-import ru.job4j.urlshortcut.dto.convert.response.ConvertDTO;
+import org.springframework.stereotype.Service;
 
-@Component
+import static ru.job4j.urlshortcut.utils.Constants.*;
+import static ru.job4j.urlshortcut.utils.UtilGenerator.randomChar;
+import static ru.job4j.urlshortcut.utils.UtilGenerator.shuffle;
+
+@Service
 public class SiteConverter {
 
-    public ConvertDTO convert(ConvertRequestDTO convertRequestDTO) {
+    public String generateCode() {
+        StringBuilder value = new StringBuilder();
+        value.append(randomChar(NUMBERS))
+                .append(randomChar(SPECIAL))
+                .append(randomChar(LOWERCASE))
+                .append(randomChar(UPPERCASE));
 
-        return new ConvertDTO();
+        value.append(SYMBOLS.charAt(SECURE_RANDOM.nextInt(SYMBOLS.length())));
+
+        return shuffle(value.toString());
     }
-
-
-//    @Override
-//    public ConvertDTO convert(ConvertRequestDTO convertRequestDTO) {
-//        return ConvertDTO;
-//    }
 
 }

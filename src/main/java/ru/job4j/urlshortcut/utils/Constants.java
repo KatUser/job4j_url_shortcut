@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.generator;
+package ru.job4j.urlshortcut.utils;
 
 import java.security.SecureRandom;
 

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static ru.job4j.urlshortcut.generator.Constants.SECURE_RANDOM;
+import static ru.job4j.urlshortcut.utils.Constants.SECURE_RANDOM;
 
 @Component
 public class UtilGenerator {
