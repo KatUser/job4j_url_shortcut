@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.dto.userregistration.response;
+package ru.job4j.urlshortcut.dto.authorization.response;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +12,14 @@ public class JwtResponseDTO {
     private String type = "Bearer";
     private Long id;
     private String username;
-    private String email;
+    private String site;
     private List<String> roles;
 
-    public JwtResponseDTO(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtResponseDTO(String accessToken, Long id, String username, String site, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
-        this.email = email;
+        this.site = site;
         this.roles = roles;
     }
 }

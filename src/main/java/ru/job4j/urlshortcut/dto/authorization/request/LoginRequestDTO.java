@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.dto.userregistration.request;
+package ru.job4j.urlshortcut.dto.authorization.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class LoginRequestDTO {
     @NotBlank
-    private String username;
+    private String login;
 
     @NotBlank
     private String password;

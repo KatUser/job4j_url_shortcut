@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.dto.userregistration.response;
+package ru.job4j.urlshortcut.dto.authorization.response;
 
 import lombok.*;
 

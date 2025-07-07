@@ -21,10 +21,10 @@ public class UserDetailsImpl implements UserDetails {
     @Getter
     private Long id;
 
-    private String username;
-
     @Getter
-    private String email;
+    private String site;
+
+    private String login;
 
     @JsonIgnore
     private String password;
@@ -32,25 +32,25 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id,
-                           String username,
-                           String email,
+                           String site,
+                           String login,
                            String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
-        this.email = email;
+        this.site = site;
+        this.login = login;
         this.password = password;
         this.authorities = authorities;
     }
 
     public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+        List<GrantedAuthority> authorities = user.getRole().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(user.getId(),
-                user.getName(),
-                user.getEmail(),
+                user.getSite(),
+                user.getLogin(),
                 user.getPassword(),
                 authorities);
     }
@@ -67,7 +67,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return login;
     }
 
     @Override
@@ -104,6 +104,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password, authorities);
+        return Objects.hash(id, site, login, password, authorities);
     }
 }

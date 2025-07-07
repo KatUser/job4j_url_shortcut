@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.job4j.urlshortcut.model.User;
 import ru.job4j.urlshortcut.repository.user.UserRepository;
 
 @Service
@@ -18,10 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findUserByName(name)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + name));
-        return UserDetailsImpl.build(user);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        var site = userRepository.findUserByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with login: " + login));
+        return UserDetailsImpl.build(site);
     }
 
 }

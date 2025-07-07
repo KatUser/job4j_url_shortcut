@@ -20,16 +20,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("""
             update User as user
-            set user.name = :#{#user.name},
-            user.email = :#{#user.email},
+            set user.site = :#{#user.site},
+            user.login  = :#{#user.login},
             user.password = :#{#user.password}
             where user.id =:#{#user.id}
             """)
     int update(@Param("user") User user);
 
-    Boolean existsByName(String name);
+    Boolean existsBySite(String name);
 
-    Boolean existsByEmail(String email);
-
-    Optional<User> findUserByName(String username);
+    Optional<User> findUserByLogin(String login);
 }
