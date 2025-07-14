@@ -24,6 +24,7 @@ public class UserDetailsImpl implements UserDetails {
     @Getter
     private String site;
 
+    @Getter
     private String login;
 
     @JsonIgnore

@@ -29,12 +29,6 @@ public class UserServiceDB implements UserService {
     }
 
     @Override
-    @Transactional
-    public boolean update(User user) {
-        return userRepository.update(user) > 0L;
-    }
-
-    @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }

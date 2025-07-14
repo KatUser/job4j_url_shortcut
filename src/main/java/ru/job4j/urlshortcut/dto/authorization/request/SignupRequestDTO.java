@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class SignupRequestDTO {
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 5)
     private String site;
 
     private Set<String> role;

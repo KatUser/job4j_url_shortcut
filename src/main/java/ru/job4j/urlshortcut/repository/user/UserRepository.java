@@ -16,17 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("delete from User as user where user.id = :userId")
     int delete(@Param("userId") Long userId);
 
-    @Transactional
-    @Modifying
-    @Query("""
-            update User as user
-            set user.site = :#{#user.site},
-            user.login  = :#{#user.login},
-            user.password = :#{#user.password}
-            where user.id =:#{#user.id}
-            """)
-    int update(@Param("user") User user);
-
     Boolean existsBySite(String name);
 
     Optional<User> findUserByLogin(String login);

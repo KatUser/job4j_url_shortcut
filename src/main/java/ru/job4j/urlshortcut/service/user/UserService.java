@@ -14,9 +14,6 @@ public interface UserService {
     @Transactional
     boolean deleteById(Long userId);
 
-    @Transactional
-    boolean update(User user);
-
     Optional<User> findById(Long id);
 
     List<User> getAllUsers();

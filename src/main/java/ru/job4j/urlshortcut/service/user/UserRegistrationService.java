@@ -1,8 +1,10 @@
 package ru.job4j.urlshortcut.service.user;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ru.job4j.urlshortcut.controller.siteutils.SiteExtractor;
 import ru.job4j.urlshortcut.dto.authorization.request.SignupRequestDTO;
 import ru.job4j.urlshortcut.dto.authorization.response.RegisterDTO;
 import ru.job4j.urlshortcut.generator.CredentialsGenerator;
@@ -21,16 +23,25 @@ import java.util.function.Supplier;
 @AllArgsConstructor
 public class UserRegistrationService {
 
+    @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
     private final CredentialsGenerator credentialsGenerator;
 
+    @Autowired
     private final UserRepository userRepository;
 
+    @Autowired
     private final RoleRepository roleRepository;
 
     public RegisterDTO register(SignupRequestDTO signUpRequest) {
-        if (Boolean.TRUE.equals(userRepository.existsBySite(signUpRequest.getSite()))
+
+        var siteFromRequestDTO = signUpRequest.getSite();
+
+        var extractedSite = SiteExtractor.extractSite(siteFromRequestDTO);
+
+        if (Boolean.TRUE.equals(userRepository.existsBySite(extractedSite))
         ) {
             return new RegisterDTO(HttpStatus.BAD_REQUEST, "registration : false");
         }
@@ -45,8 +56,7 @@ public class UserRegistrationService {
         user.setLogin(String.valueOf(log));
         user.setPassword(encoder.encode(pass));
 
-        var siteNameToLowerCase = signUpRequest.getSite().toLowerCase();
-        user.setSite(siteNameToLowerCase);
+        user.setSite(extractedSite);
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -63,11 +73,12 @@ public class UserRegistrationService {
                 }
             });
         }
+
         user.setRole(roles);
         userRepository.save(user);
+
         return new RegisterDTO(HttpStatus.OK, String.format(
                 "registration : true, login : %s, password : %s", log,
                 pass));
     }
-
 }
