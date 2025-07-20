@@ -19,4 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsBySite(String name);
 
     Optional<User> findUserByLogin(String login);
+
+    @Transactional
+    @Modifying
+    @Query()
+    User update(@Param("user") User user);
+
 }

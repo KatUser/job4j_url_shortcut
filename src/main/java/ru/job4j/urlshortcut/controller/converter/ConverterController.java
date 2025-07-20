@@ -13,11 +13,13 @@ import ru.job4j.urlshortcut.dto.convert.request.ConvertRequestDTO;
 import ru.job4j.urlshortcut.dto.convert.response.MessageConvertResponseDTO;
 import ru.job4j.urlshortcut.userdetails.UserDetailsImpl;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class ConverterController {
 
     @Autowired
@@ -40,7 +42,8 @@ public class ConverterController {
                     "You can only convert urls for " + user.getSite()
             ));
         }
-        var code = siteConverter.generateCode();
+
+        var code = URLEncoder.encode(extractedSite, StandardCharsets.UTF_8);
         return ResponseEntity.ok(new MessageConvertResponseDTO(code));
     }
 }
