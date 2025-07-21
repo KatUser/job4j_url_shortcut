@@ -38,4 +38,9 @@ public class UserServiceDB implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public Optional<User> findBySite(String site) {
+        return userRepository.findUserBySite(site);
+    }
+
 }

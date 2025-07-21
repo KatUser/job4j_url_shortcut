@@ -75,7 +75,7 @@ public class UserRegistrationService {
         }
 
         user.setRole(roles);
-        userRepository.save(user);
+        userRepository.saveOrUpdate(user);
 
         return new RegisterDTO(HttpStatus.OK, String.format(
                 "registration : true, login : %s, password : %s", log,

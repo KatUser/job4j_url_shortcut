@@ -22,7 +22,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying
-    @Query()
-    User update(@Param("user") User user);
+    @Query(value = "insert into app_user (id, site, login, password, count)"
+    + "values (:#{#user.id}, :#{#user.site}, :#{#user.login}, :#{#user.password}, 0)"
+    + "on conflict(site) do update set count = app_user.count + 1 where app_user.site = :#{#user.site}",
+            nativeQuery = true)
+    void saveOrUpdate(@Param("user") User user);
 
+    Optional<User> findUserBySite(String site);
 }
