@@ -29,7 +29,4 @@ public class User {
     @JoinTable(name = "app_user_role", joinColumns = @JoinColumn(name = "app_user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> role;
-
-    private Integer count;
-
 }

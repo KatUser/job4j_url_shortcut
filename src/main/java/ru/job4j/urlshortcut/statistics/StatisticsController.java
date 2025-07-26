@@ -22,9 +22,10 @@ public class StatisticsController {
     public ResponseEntity<StatisticsResponseDto> getUrlStatistics(
             @Valid @RequestBody StatisticsRequestDto statisticsRequestDto) {
         var url = statisticsRequestDto.getUrl();
-        var total = userRepository.findUserBySite(url).get().getCount();
-        return ResponseEntity.ok(new StatisticsResponseDto(
-                url, total
-        ));
+//        var total = userRepository.findUserBySite(url).get().getCount();
+//        return ResponseEntity.ok(new StatisticsResponseDto(
+//                url, total
+        return null;
+
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import ru.job4j.urlshortcut.controller.siteutils.SiteExtractor;
+import ru.job4j.urlshortcut.siteutils.SiteExtractor;
 import ru.job4j.urlshortcut.converter.SiteConverter;
 import ru.job4j.urlshortcut.dto.convert.request.ConvertRequestDTO;
 import ru.job4j.urlshortcut.dto.convert.response.MessageConvertResponseDTO;
@@ -30,14 +30,16 @@ public class ConverterController {
             @Valid @RequestBody ConvertRequestDTO convertRequestDTO,
             @AuthenticationPrincipal UserDetailsImpl user) {
 
-        var siteInConvertRequestDTO = convertRequestDTO.getUrl().toLowerCase();
+        /* Достаём url из запроса  */
+        var siteInConvertRequestDTO = convertRequestDTO.getUrl();
 
+        /* У урла отрезаем http(s), приводим к нижнему регистру */
         var extractedSite = SiteExtractor.extractSite(siteInConvertRequestDTO);
 
-        var siteCore = extractedSite.split("/")[0];
-        System.out.println(extractedSite);
+        /* У урла отрезаем хвост */
+        var siteMain = extractedSite.split("/")[0];
 
-        if (!Objects.equals(siteCore, user.getSite())) {
+        if (!Objects.equals(siteMain, user.getSite())) {
             return ResponseEntity.badRequest().body(new MessageConvertResponseDTO(
                     "You can only convert urls for " + user.getSite()
             ));

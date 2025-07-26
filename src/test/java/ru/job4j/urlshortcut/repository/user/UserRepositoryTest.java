@@ -13,6 +13,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.job4j.urlshortcut.model.Role;
 import ru.job4j.urlshortcut.model.User;
 
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -25,20 +27,19 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserRepositoryTest {
 
     @Mock
-    private Role Role = Mockito.mock(Role.class);
+    private Role roleMock = Mockito.mock(Role.class);
 
     @Autowired
     private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
-        User user2 = new User(2L, "testsite2.com", "login2", "password2", null, 0);
-        userRepository.save(user2);
+        userRepository.deleteAll();
     }
 
     @Test
     public void whenSaveUser_thenCanGetUser() {
-        User user1 = new User(1L, "testsite.com", "login", "password", null, 0);
+        User user1 = new User(1L, "testsite.com", "login", "password", Set.of(roleMock));
         userRepository.save(user1);
         assertTrue(userRepository.existsById(user1.getId()));
     }

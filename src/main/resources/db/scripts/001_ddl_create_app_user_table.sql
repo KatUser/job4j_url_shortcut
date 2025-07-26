@@ -3,6 +3,5 @@ CREATE TABLE app_user
     id SERIAL PRIMARY KEY,
     site VARCHAR NOT NULL UNIQUE,
     login VARCHAR NOT NULL UNIQUE,
-    password VARCHAR NOT NULL UNIQUE,
-    count INT
+    password VARCHAR NOT NULL UNIQUE
 );
