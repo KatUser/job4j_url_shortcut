@@ -1,24 +1,33 @@
 package ru.job4j.urlshortcut.converter;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import static ru.job4j.urlshortcut.utils.Constants.*;
-import static ru.job4j.urlshortcut.utils.UtilGenerator.randomChar;
-import static ru.job4j.urlshortcut.utils.UtilGenerator.shuffle;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 
-@Service
+@Component
 public class SiteConverter {
 
-    public String generateCode() {
-        StringBuilder value = new StringBuilder();
-        value.append(randomChar(NUMBERS))
-                .append(randomChar(SPECIAL))
-                .append(randomChar(LOWERCASE))
-                .append(randomChar(UPPERCASE));
+    private static final String ALGORITHM = "AES";
 
-        value.append(SYMBOLS.charAt(SECURE_RANDOM.nextInt(SYMBOLS.length())));
+    private static final byte[] KEY = "MySuperSecretKey".getBytes();
 
-        return shuffle(value.toString());
+    public static String encrypt(String data) throws Exception {
+        SecretKeySpec key = new SecretKeySpec(KEY, ALGORITHM);
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encryptedBytes = cipher.doFinal(data.getBytes());
+        return Base64.getEncoder().encodeToString(encryptedBytes);
+    }
+
+    public static String decrypt(String encryptedData) throws Exception {
+        SecretKeySpec key = new SecretKeySpec(KEY, ALGORITHM);
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        byte[] decodedBytes = Base64.getDecoder().decode(encryptedData);
+        byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+        return new String(decryptedBytes);
     }
 
 }

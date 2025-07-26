@@ -3,10 +3,10 @@ package ru.job4j.urlshortcut.generator;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-import static ru.job4j.urlshortcut.utils.Constants.*;
-import static ru.job4j.urlshortcut.utils.UtilGenerator.randomChar;
-import static ru.job4j.urlshortcut.utils.UtilGenerator.shuffle;
+import static ru.job4j.urlshortcut.generator.utils.Constants.SYMBOLS;
+import static ru.job4j.urlshortcut.generator.utils.UtilGenerator.shuffle;
 
 @Service
 public class CredentialsGenerator {
@@ -14,22 +14,20 @@ public class CredentialsGenerator {
     public HashMap<String, String> credentials = new HashMap<>();
 
     public HashMap<String, String> generate() {
-        StringBuilder value = new StringBuilder();
-        value.append(randomChar(NUMBERS))
-                .append(randomChar(SPECIAL))
-                .append(randomChar(LOWERCASE))
-                .append(randomChar(UPPERCASE));
 
-        value.append(SYMBOLS.charAt(SECURE_RANDOM.nextInt(SYMBOLS.length())));
-        var shuffledValue = shuffle(value.toString());
+        String value = new Random().ints(8, 0, SYMBOLS.length())
+                .mapToObj(SYMBOLS::charAt)
+                .map(Object::toString)
+                .collect(Collectors.joining());
 
-        StringBuilder key = new StringBuilder();
-        key.append(randomChar(NUMBERS))
-                .append(randomChar(SPECIAL))
-                .append(randomChar(LOWERCASE))
-                .append(randomChar(UPPERCASE));
-        key.append(SYMBOLS.charAt(SECURE_RANDOM.nextInt(SYMBOLS.length())));
-        var shuffledKey = shuffle(key.toString());
+        var shuffledValue = shuffle(value);
+
+        String key = new Random().ints(8, 0, SYMBOLS.length())
+                .mapToObj(SYMBOLS::charAt)
+                .map(Object::toString)
+                .collect(Collectors.joining());
+
+        var shuffledKey = shuffle(key);
 
         credentials.put(shuffledValue, shuffledKey);
 

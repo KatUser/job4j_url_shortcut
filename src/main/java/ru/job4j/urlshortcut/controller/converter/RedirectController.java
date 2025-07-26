@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.urlshortcut.converter.SiteConverter;
 import ru.job4j.urlshortcut.model.CalledUrl;
 import ru.job4j.urlshortcut.repository.calledurl.CalledUrlRepository;
 import ru.job4j.urlshortcut.repository.user.UserRepository;
@@ -15,8 +16,6 @@ import ru.job4j.urlshortcut.securityconfig.WebSecurityConfig;
 import ru.job4j.urlshortcut.userdetails.UserDetailsImpl;
 
 import java.net.URI;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 @AllArgsConstructor
 @RestController
@@ -34,8 +33,9 @@ public class RedirectController {
 
     @GetMapping("/redirect/{encodedUrl}")
     public ResponseEntity<Void> redirect(@PathVariable String encodedUrl,
-                                         @AuthenticationPrincipal UserDetailsImpl user) {
-        var decodedUrl = URLDecoder.decode(encodedUrl, StandardCharsets.UTF_8);
+                                         @AuthenticationPrincipal UserDetailsImpl user)
+            throws Exception {
+        var decodedUrl = SiteConverter.decrypt(encodedUrl);
 
         webSecurityConfig.setAllowedExternalUrl(decodedUrl);
 

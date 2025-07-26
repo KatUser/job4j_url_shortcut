@@ -1,6 +1,4 @@
-package ru.job4j.urlshortcut.utils;
-
-import java.security.SecureRandom;
+package ru.job4j.urlshortcut.generator.utils;
 
 public class Constants {
 
@@ -14,7 +12,4 @@ public class Constants {
 
     public static final String SYMBOLS = NUMBERS + SPECIAL + LOWERCASE + UPPERCASE;
 
-//    public static final String SYMBOLS = NUMBERS + LOWERCASE + UPPERCASE;
-
-    public static final SecureRandom SECURE_RANDOM = new SecureRandom();
 }

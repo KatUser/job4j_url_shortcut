@@ -17,17 +17,10 @@ public interface CalledUrlRepository extends JpaRepository<CalledUrl, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = """
-                insert into called_url(app_user_id, url, count)
-                values (
-                            :#{#calledUrl.user.getId()},
-                            :#{#calledUrl.url},
-                                    1
-                                                )
-                on conflict (url) do update set count
-                = called_url.count + 1
-                where called_url.url = :#{#calledUrl.url}
-            """, nativeQuery = true)
+    @Query(value = "insert into called_url(app_user_id, url, count) values"
+            + "(:#{#calledUrl.user.getId()}, :#{#calledUrl.url}, 1)"
+            + " on conflict (url) do update set count = called_url.count + 1"
+            + " where called_url.url = :#{#calledUrl.url}", nativeQuery = true)
     void saveOrUpdate(@Param("calledUrl") CalledUrl calledUrl);
 
     int countCalledUrlByUrl(String calledUrl);
