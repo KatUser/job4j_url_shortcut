@@ -21,13 +21,25 @@ import ru.job4j.urlshortcut.jwt.AuthEntryPointJwt;
 import ru.job4j.urlshortcut.jwt.AuthTokenFilter;
 import ru.job4j.urlshortcut.userdetails.UserDetailsServiceImpl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Getter
     @Setter
-    public String allowedExternalUrl = "http://localhost:8080/";
+    public Set<String> existingAllowedUrls = Set.of(
+            "/api/auth/**",
+            "/api/test/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**"
+    );
+
+    @Getter
+    @Setter
+    public Set<String> allowedUrls = new HashSet<>();
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,19 +70,18 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers(allowedExternalUrl).permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
-                );
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    allowedUrls.addAll(existingAllowedUrls);
+    http.csrf(AbstractHttpConfigurer::disable)
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(
+                    auth -> auth.requestMatchers(
+                            allowedUrls.toArray(String[]::new)
+                    ).permitAll().anyRequest().authenticated()
+
+            );
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

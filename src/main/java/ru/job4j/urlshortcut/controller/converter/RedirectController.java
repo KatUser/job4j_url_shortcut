@@ -37,7 +37,7 @@ public class RedirectController {
             throws Exception {
         var decodedUrl = SiteConverter.decrypt(encodedUrl);
 
-        webSecurityConfig.setAllowedExternalUrl(decodedUrl);
+        webSecurityConfig.allowedUrls.add(decodedUrl);
 
         var userFromRepository = userRepository.findUserById(user.getId()).get();
 
