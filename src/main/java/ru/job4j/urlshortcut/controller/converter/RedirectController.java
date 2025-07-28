@@ -1,5 +1,7 @@
 package ru.job4j.urlshortcut.controller.converter;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,9 @@ public class RedirectController {
     private UserRepository userRepository;
 
     @GetMapping("/redirect/{encodedUrl}")
-    public ResponseEntity<Void> redirect(@PathVariable String encodedUrl,
+    public ResponseEntity<Void> redirect(@Valid
+                                         @NotBlank(message = "секретный код не может быть пустым")
+                                         @PathVariable String encodedUrl,
                                          @AuthenticationPrincipal UserDetailsImpl user)
             throws Exception {
         var decodedUrl = SiteConverter.decrypt(encodedUrl);
@@ -41,9 +45,7 @@ public class RedirectController {
 
         var userFromRepository = userRepository.findUserById(user.getId()).get();
 
-        var calledUrl = new CalledUrl();
-        calledUrl.setUser(userFromRepository);
-        calledUrl.setUrl(decodedUrl);
+        var calledUrl = new CalledUrl(userFromRepository, decodedUrl);
 
         calledUrlRepository.saveOrUpdate(calledUrl);
 

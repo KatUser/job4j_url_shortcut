@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequestDTO {
-    @NotBlank
+    @NotBlank(message = "поле login не может быть пустым")
     private String login;
 
-    @NotBlank
+    @NotBlank(message = "поле password не может быть пустым")
     private String password;
 }

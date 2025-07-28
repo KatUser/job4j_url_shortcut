@@ -1,5 +1,6 @@
 package ru.job4j.urlshortcut.dto.convert.response;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageConvertResponseDTO {
+    @NotBlank
     private String code;
 }
