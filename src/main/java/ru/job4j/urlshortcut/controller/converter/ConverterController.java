@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import ru.job4j.urlshortcut.converter.SiteConverter;
+import ru.job4j.urlshortcut.controller.converter.convert.SiteConverter;
 
-import ru.job4j.urlshortcut.dto.convert.request.ConvertRequestDTO;
-import ru.job4j.urlshortcut.dto.convert.response.MessageConvertResponseDTO;
+import ru.job4j.urlshortcut.controller.converter.convert.request.ConvertRequestDTO;
+import ru.job4j.urlshortcut.controller.converter.convert.response.MessageConvertResponseDTO;
 import ru.job4j.urlshortcut.userdetails.UserDetailsImpl;
 
 @AllArgsConstructor

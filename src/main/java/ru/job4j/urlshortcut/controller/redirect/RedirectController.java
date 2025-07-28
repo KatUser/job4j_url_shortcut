@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.controller.converter;
+package ru.job4j.urlshortcut.controller.redirect;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.urlshortcut.converter.SiteConverter;
+import ru.job4j.urlshortcut.controller.converter.convert.SiteConverter;
 import ru.job4j.urlshortcut.model.CalledUrl;
 import ru.job4j.urlshortcut.repository.calledurl.CalledUrlRepository;
 import ru.job4j.urlshortcut.repository.user.UserRepository;

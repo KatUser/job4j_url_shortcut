@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.converter;
+package ru.job4j.urlshortcut.controller.converter.convert;
 
 import org.springframework.stereotype.Component;
 

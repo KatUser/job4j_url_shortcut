@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.dto.convert.response;
+package ru.job4j.urlshortcut.controller.converter.convert.response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
