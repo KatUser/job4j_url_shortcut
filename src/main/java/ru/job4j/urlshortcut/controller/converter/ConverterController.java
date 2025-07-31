@@ -2,20 +2,24 @@ package ru.job4j.urlshortcut.controller.converter;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import ru.job4j.urlshortcut.convert.SiteConverter;
+import ru.job4j.urlshortcut.siteutils.SiteConverter;
 
-import ru.job4j.urlshortcut.convert.request.ConvertRequestDTO;
-import ru.job4j.urlshortcut.convert.response.MessageConvertResponseDTO;
+import ru.job4j.urlshortcut.dto.converter.ConvertRequestDTO;
+import ru.job4j.urlshortcut.dto.converter.MessageConvertResponseDTO;
 import ru.job4j.urlshortcut.userdetails.UserDetailsImpl;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class ConverterController {
+
+    @Autowired
+    private SiteConverter siteConverter;
 
     @PostMapping("/convert")
     public ResponseEntity<MessageConvertResponseDTO> convertSiteUrl(
@@ -26,11 +30,12 @@ public class ConverterController {
 
         if (!siteInConvertRequestDTO.contains(user.getSite())) {
             return ResponseEntity.badRequest().body(new MessageConvertResponseDTO(
-                    "You can only convert urls for " + user.getSite()
+                    "Вы можете конвертировать урлы только для " + user.getSite()
             ));
         }
 
-        var code = SiteConverter.encrypt(siteInConvertRequestDTO);
+        var code = siteConverter.encrypt(siteInConvertRequestDTO);
+
         return ResponseEntity.ok(new MessageConvertResponseDTO(code));
     }
 }

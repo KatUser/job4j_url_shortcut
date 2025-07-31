@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.statistics.dto;
+package ru.job4j.urlshortcut.dto.statistics;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,5 +12,5 @@ public class StatisticsResponseDto {
     private String url;
 
     @NotBlank
-    private int total;
+    private Long total;
 }

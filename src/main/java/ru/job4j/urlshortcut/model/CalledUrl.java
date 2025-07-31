@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class CalledUrl {
@@ -23,11 +23,10 @@ public class CalledUrl {
 
     private String url;
 
-    private Integer count;
+    private Long count;
 
     public CalledUrl(User user, String url) {
         this.user = user;
         this.url = url;
     }
-
 }

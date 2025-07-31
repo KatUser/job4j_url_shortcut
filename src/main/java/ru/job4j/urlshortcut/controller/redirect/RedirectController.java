@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.urlshortcut.convert.SiteConverter;
+import ru.job4j.urlshortcut.siteutils.SiteConverter;
 import ru.job4j.urlshortcut.model.CalledUrl;
 import ru.job4j.urlshortcut.repository.calledurl.CalledUrlRepository;
 import ru.job4j.urlshortcut.repository.user.UserRepository;
@@ -33,13 +33,16 @@ public class RedirectController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/redirect/{encodedUrl}")
+    @Autowired
+    private SiteConverter siteConverter;
+
+    @GetMapping("/redirect/{encryptedUrl}")
     public ResponseEntity<Void> redirect(@Valid
                                          @NotBlank(message = "секретный код не может быть пустым")
-                                         @PathVariable String encodedUrl,
+                                         @PathVariable String encryptedUrl,
                                          @AuthenticationPrincipal UserDetailsImpl user)
             throws Exception {
-        var decodedUrl = SiteConverter.decrypt(encodedUrl);
+        var decodedUrl = siteConverter.decrypt(encryptedUrl);
 
         webSecurityConfig.allowedUrls.add(decodedUrl);
 

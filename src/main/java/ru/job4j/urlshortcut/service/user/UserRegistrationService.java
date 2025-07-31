@@ -3,6 +3,7 @@ package ru.job4j.urlshortcut.service.user;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
 import ru.job4j.urlshortcut.siteutils.SiteExtractor;
 import ru.job4j.urlshortcut.dto.authorization.request.SignupRequestDTO;

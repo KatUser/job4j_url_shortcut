@@ -1,4 +1,4 @@
-package ru.job4j.urlshortcut.convert.request;
+package ru.job4j.urlshortcut.dto.converter;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

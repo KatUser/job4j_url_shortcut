@@ -1,4 +1,5 @@
-package ru.job4j.urlshortcut.convert;
+package ru.job4j.urlshortcut.siteutils;
+
 
 import org.springframework.stereotype.Component;
 
@@ -11,9 +12,9 @@ public class SiteConverter {
 
     private static final String ALGORITHM = "AES";
 
-    private static final byte[] KEY = "MySuperSecretKey".getBytes();
+    private static final byte[] KEY = "ConverterSuperSecretKey!".getBytes();
 
-    public static String encrypt(String data) throws Exception {
+    public String encrypt(String data) throws Exception {
         SecretKeySpec key = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -21,7 +22,7 @@ public class SiteConverter {
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 
-    public static String decrypt(String encryptedData) throws Exception {
+    public String decrypt(String encryptedData) throws Exception {
         SecretKeySpec key = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key);
