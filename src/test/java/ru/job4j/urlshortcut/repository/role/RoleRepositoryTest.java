@@ -1,20 +1,18 @@
 package ru.job4j.urlshortcut.repository.role;
 
 import org.junit.jupiter.api.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import ru.job4j.urlshortcut.model.ERole;
 import ru.job4j.urlshortcut.model.Role;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RoleRepositoryTest {
 
@@ -23,15 +21,19 @@ public class RoleRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        repository.deleteAll();
         repository.save(new Role(null, ERole.ROLE_USER));
         repository.save(new Role(null, ERole.ROLE_ADMIN));
         repository.save(new Role(null, ERole.ROLE_MODERATOR));
     }
 
-    @Disabled
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
+    }
+
     @Test
     @Order(1)
+    @Disabled
     public void whenRoleExists_thenRoleIsReturned() {
         assertTrue(repository.existsById(1L));
     }

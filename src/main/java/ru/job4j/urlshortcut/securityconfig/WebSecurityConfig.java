@@ -31,7 +31,7 @@ public class WebSecurityConfig {
     @Getter
     @Setter
     public Set<String> existingAllowedUrls = Set.of(
-            "api/auth/login",
+            "api/auth/**",
             "/api/test/**",
             "/swagger-ui/**",
             "/v3/api-docs/**"

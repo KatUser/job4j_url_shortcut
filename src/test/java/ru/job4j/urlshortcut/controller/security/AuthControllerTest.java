@@ -1,8 +1,8 @@
 package ru.job4j.urlshortcut.controller.security;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AuthControllerTest {
 
     @Autowired
@@ -35,11 +34,14 @@ class AuthControllerTest {
 
     @BeforeEach
     void setUp() {
-        roleRepository.deleteAll();
-        userRepository.deleteAll();
         roleRepository.save(new Role(1L, ERole.ROLE_USER));
         userRepository.save(new User(null, "www.registered.com", "login", "password", null));
+    }
 
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
     }
 
 

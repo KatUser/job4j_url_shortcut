@@ -28,5 +28,6 @@ public class CalledUrl {
     public CalledUrl(User user, String url) {
         this.user = user;
         this.url = url;
+        this.count = 1L;
     }
 }

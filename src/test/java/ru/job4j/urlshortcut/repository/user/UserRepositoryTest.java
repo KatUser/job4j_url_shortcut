@@ -1,8 +1,8 @@
 package ru.job4j.urlshortcut.repository.user;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
 
     @Autowired
@@ -27,10 +26,13 @@ public class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        userRepository.deleteAll();
         user = new User(null, "testsite.com", "login", "password", Set.of());
         userRepository.save(user);
+    }
 
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
     }
 
     @Test

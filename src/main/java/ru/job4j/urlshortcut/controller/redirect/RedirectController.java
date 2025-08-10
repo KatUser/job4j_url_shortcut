@@ -42,6 +42,7 @@ public class RedirectController {
                                          @PathVariable String encryptedUrl,
                                          @AuthenticationPrincipal UserDetailsImpl user)
             throws Exception {
+
         var decodedUrl = siteConverter.decrypt(encryptedUrl);
 
         webSecurityConfig.allowedUrls.add(decodedUrl);
@@ -50,7 +51,11 @@ public class RedirectController {
 
         var calledUrl = new CalledUrl(userFromRepository, decodedUrl);
 
-        calledUrlRepository.saveOrUpdate(calledUrl);
+        if (calledUrlRepository.existsByUrl(calledUrl.getUrl())) {
+            calledUrlRepository.updateByUrl(calledUrl.getUrl());
+        } else {
+            calledUrlRepository.save(calledUrl);
+        }
 
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
                 .location(URI.create(decodedUrl))

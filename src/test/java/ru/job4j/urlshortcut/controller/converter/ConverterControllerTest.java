@@ -1,7 +1,7 @@
 package ru.job4j.urlshortcut.controller.converter;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ConverterControllerTest {
 
     @Autowired

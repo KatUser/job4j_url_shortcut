@@ -16,14 +16,17 @@ import java.util.Optional;
 @Component
 public interface CalledUrlRepository extends JpaRepository<CalledUrl, Long> {
 
+    boolean existsByUrl(String url);
+
     @Async
     @Transactional
-    @Modifying
-    @Query(value = "insert into called_url(app_user_id, url, count) values"
-            + "(:#{#calledUrl.user.getId()}, :#{#calledUrl.url}, 1)"
-            + " on conflict (url) do update set count = called_url.count + 1"
-            + " where called_url.url = :#{#calledUrl.url}", nativeQuery = true)
-    void saveOrUpdate(@Param("calledUrl") CalledUrl calledUrl);
+    @Modifying(clearAutomatically = true)
+    @Query(value = """
+            update called_url
+                        set count = called_url.count + 1
+                        where called_url.url = :calledUrl
+            """, nativeQuery = true)
+    void updateByUrl(@Param("calledUrl") String calledUrl);
 
     Optional<CalledUrl> findByUrl(String calledUrl);
 }
